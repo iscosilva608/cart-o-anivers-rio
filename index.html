@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feliz Aniversário</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 40px;
+    background: #ffafbd; /* Fundo rosa sólido */
+}
+.container {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 500px;
+    margin: auto;
+    box-shadow: 0 0 12px rgba(0,0,0,0.25);
+}
+h1 { font-size: 32px; margin-bottom: 10px; }
+p { font-size: 18px; line-height: 1.6; }
+
+/* Botões estilos */
+button {
+    cursor: pointer;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    font-size: 20px;
+    padding: 15px 25px;
+    transition: 0.3s;
+    box-shadow: 0 0 15px #ffb6c1, 0 0 30px #ffb6c1;
+    animation: pulsar 1.5s infinite;
+}
+button:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 20px #ffb6c1, 0 0 40px #ffb6c1;
+}
+#botaoForm, #botaoPrincipal {
+    background: #ff77a9;
+}
+@keyframes pulsar {
+    0% { transform: scale(1); box-shadow: 0 0 15px #ffb6c1, 0 0 30px #ffb6c1; }
+    50% { transform: scale(1.05); box-shadow: 0 0 25px #ffb6c1, 0 0 50px #ffb6c1; }
+    100% { transform: scale(1); box-shadow: 0 0 15px #ffb6c1, 0 0 30px #ffb6c1; }
+}
+
+/* Foto responsiva */
+#foto {
+    width: 100%;
+    max-width: 450px;
+    height: auto;
+    aspect-ratio: 450/540;
+    object-fit: cover;
+    border-radius: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+    display: none;
+    box-shadow: 0 0 18px rgba(0, 0, 0, 0.35);
+    animation: fadeIn 1.8s ease-in-out;
+}
+
+@keyframes fadeIn { from { opacity: 0; transform: scale(0.8);} to {opacity: 1; transform: scale(1);} }
+@keyframes cardOpen { 0% { transform: scale(0.85); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes subir { 0% { transform: translateY(60vh) scale(0.8); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(-80vh) scale(1.2); opacity: 0; } }
+.coracao, .balao { position: fixed; bottom: -50px; font-size: 30px; animation: subir 6s linear infinite; pointer-events: none; }
+@keyframes fall { to { transform: translateY(110vh); opacity:0; } }
+</style>
+</head>
+
+<body>
+
+<div class="container" style="animation: cardOpen 0.8s ease;">
+<h1 id="titulo"></h1>
+
+<p>Clique no botão abaixo para abrir a surpresa principal 🎁</p>
+<button id="botaoPrincipal" onclick="mostrarMensagem()">Abrir Surpresa 💖</button>
+
+<div id="mensagem" style="display:none; margin-top:20px; font-size:20px;">
+    <img id="foto" src="https://lh3.googleusercontent.com/d/1xIqUHLokMuwhb5aeqoFZ_JNlNnOzkEWL">
+    <p id="mensagemTexto"></p> <!-- Aqui a frase animada aparecerá -->
+
+    <p style="font-size: 20px; font-weight: bold; margin-top: 25px;">
+        💛 Tem mais uma surpresa esperando por você!  
+        Clique no botão abaixo 👇
+    </p>
+
+    <button id="botaoForm" onclick="abrirForm()">
+        ⭐ Resgatar Segunda Surpresa ⭐
+    </button>
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<script>
+function mostrarMensagem() {
+    document.getElementById("mensagem").style.display = "block";
+    const foto = document.getElementById("foto");
+    foto.style.display = "block";
+
+    // Para a animação pulsante do botão principal
+    const botao = document.getElementById("botaoPrincipal");
+    botao.style.animation = "none"; 
+    botao.style.boxShadow = "0 0 10px #ffb6c1"; 
+    botao.style.transform = "scale(1)";
+
+    // Confetti
+    var duration = 2500;
+    var end = Date.now() + duration;
+    (function frame() {
+        confetti({particleCount: 15, angle: 60, spread: 70, origin: {x: 0}});
+        confetti({particleCount: 15, angle: 120, spread: 70, origin: {x: 1}});
+        if (Date.now() < end) requestAnimationFrame(frame);
+    })();
+
+    // Frase animada junto com a foto
+    let frase = "Rayssa, que o seu novo ciclo venha trazendo aquilo que você merece: amor, tranquilidade e tudo que faz teu coração sorrir. Chegar aos 30 não é o fim do mundo, é só o começo de coisas ainda melhores! Você apenas ficou mais madura e continua linda!";
+    let i = 0;
+    let elemento = document.getElementById("mensagemTexto");
+    elemento.innerHTML = "";
+
+    // Dispara a animação da frase junto com a foto
+    function digitar() {
+        if (i < frase.length) {
+            elemento.innerHTML += frase.charAt(i);
+            i++;
+            setTimeout(digitar, 30); // mais rápido e suave
+        }
+    }
+    digitar(); // inicia imediatamente com a foto
+}
+
+function abrirForm() {
+    window.open("https://forms.gle/ve9F82i7nJDH7da88", "_blank");
+}
+
+// Título digitando
+let titulo = "Feliz aniversário, Rayssa! 🎉";
+let index = 0;
+function digitarTitulo() {
+    if (index < titulo.length) {
+        document.getElementById("titulo").innerHTML += titulo.charAt(index);
+        index++;
+        setTimeout(digitarTitulo, 90);
+    }
+}
+digitarTitulo();
+
+// Corações e balões
+function criarElementoFlutuante(tipo, simbolo) {
+    var el = document.createElement('div');
+    el.className = tipo;
+    el.innerHTML = simbolo;
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.animationDuration = (4 + Math.random() * 3) + 's';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 7000);
+}
+setInterval(() => criarElementoFlutuante('coracao', '💖'), 1200);
+setInterval(() => criarElementoFlutuante('balao', '🎈'), 1700);
+
+// Estrelas
+function createStar(){
+    const s=document.createElement('div');
+    s.innerHTML='⭐';
+    s.style.position='fixed';
+    s.style.left=Math.random()*100+'vw';
+    s.style.top='-20px';
+    s.style.fontSize=(20+Math.random()*20)+'px';
+    s.style.opacity='0.8';
+    s.style.animation='fall 3s linear forwards';
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),3000);
+}
+setInterval(createStar,400);
+</script>
+
+</body>
+</html>
