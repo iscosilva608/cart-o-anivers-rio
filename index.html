@@ -101,14 +101,15 @@ button:hover {
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
+let textoJaRodou = false;
+
 function mostrarMensagem() {
     const audio = document.getElementById("musica");
     audio.volume = 0.4;
     audio.play().catch(e => console.log(e));
 
     document.getElementById("mensagem").style.display = "block";
-    const foto = document.getElementById("foto");
-    foto.style.display = "block";
+    document.getElementById("foto").style.display = "block";
 
     const botao = document.getElementById("botaoPrincipal");
     botao.style.animation = "none"; 
@@ -123,19 +124,23 @@ function mostrarMensagem() {
         if (Date.now() < end) requestAnimationFrame(frame);
     })();
 
-    let frase = "Rayssa, que o seu novo ciclo venha trazendo aquilo que você merece: amor, tranquilidade e tudo que faz teu coração sorrir. Chegar aos 30 não é o fim do mundo, é só o começo de coisas ainda melhores! Você apenas ficou mais madura e continua linda!";
-    let i = 0;
-    let elemento = document.getElementById("mensagemTexto");
-    elemento.innerHTML = "";
+    if (!textoJaRodou) {
+        textoJaRodou = true;
 
-    function digitar() {
-        if (i < frase.length) {
-            elemento.innerHTML += frase.charAt(i);
-            i++;
-            setTimeout(digitar, 30);
+        let frase = "Rayssa, que o seu novo ciclo venha trazendo aquilo que você merece: amor, tranquilidade e tudo que faz teu coração sorrir. Chegar aos 30 não é o fim do mundo, é só o começo de coisas ainda melhores! Você apenas ficou mais madura e continua linda!";
+        let i = 0;
+        let elemento = document.getElementById("mensagemTexto");
+        elemento.innerHTML = "";
+
+        function digitar() {
+            if (i < frase.length) {
+                elemento.innerHTML += frase.charAt(i);
+                i++;
+                setTimeout(digitar, 30);
+            }
         }
+        digitar();
     }
-    digitar();
 }
 
 function abrirForm() {
@@ -181,5 +186,6 @@ setInterval(createStar,400);
 </script>
 </body>
 </html>
+
 
 
