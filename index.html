@@ -10,7 +10,7 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
     padding: 40px;
-    background: #ffafbd; /* Fundo rosa sólido */
+    background: #ffafbd;
 }
 .container {
     background: rgba(255, 255, 255, 0.85);
@@ -23,7 +23,6 @@ body {
 h1 { font-size: 32px; margin-bottom: 10px; }
 p { font-size: 18px; line-height: 1.6; }
 
-/* Botões estilos */
 button {
     cursor: pointer;
     border: none;
@@ -42,13 +41,13 @@ button:hover {
 #botaoForm, #botaoPrincipal {
     background: #ff77a9;
 }
+
 @keyframes pulsar {
     0% { transform: scale(1); box-shadow: 0 0 15px #ffb6c1, 0 0 30px #ffb6c1; }
     50% { transform: scale(1.05); box-shadow: 0 0 25px #ffb6c1, 0 0 50px #ffb6c1; }
     100% { transform: scale(1); box-shadow: 0 0 15px #ffb6c1, 0 0 30px #ffb6c1; }
 }
 
-/* Foto responsiva */
 #foto {
     width: 100%;
     max-width: 450px;
@@ -74,6 +73,10 @@ button:hover {
 
 <body>
 
+<audio id="musica" preload="auto">
+  <source src="https://raw.githubusercontent.com/iscosilva608/cart-o-anivers-rio/main/Alphaville%20-%20Forever%20Young%20_Official%20Video(MP3_320K).mp3" type="audio/mpeg">
+</audio>
+
 <div class="container" style="animation: cardOpen 0.8s ease;">
 <h1 id="titulo"></h1>
 
@@ -82,7 +85,7 @@ button:hover {
 
 <div id="mensagem" style="display:none; margin-top:20px; font-size:20px;">
     <img id="foto" src="https://lh3.googleusercontent.com/d/1xIqUHLokMuwhb5aeqoFZ_JNlNnOzkEWL">
-    <p id="mensagemTexto"></p> <!-- Aqui a frase animada aparecerá -->
+    <p id="mensagemTexto"></p>
 
     <p style="font-size: 20px; font-weight: bold; margin-top: 25px;">
         💛 Tem mais uma surpresa esperando por você!  
@@ -93,24 +96,25 @@ button:hover {
         ⭐ Resgatar Segunda Surpresa ⭐
     </button>
 </div>
-
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
 function mostrarMensagem() {
+    const audio = document.getElementById("musica");
+    audio.volume = 0.4;
+    audio.play().catch(e => console.log(e));
+
     document.getElementById("mensagem").style.display = "block";
     const foto = document.getElementById("foto");
     foto.style.display = "block";
 
-    // Para a animação pulsante do botão principal
     const botao = document.getElementById("botaoPrincipal");
     botao.style.animation = "none"; 
     botao.style.boxShadow = "0 0 10px #ffb6c1"; 
     botao.style.transform = "scale(1)";
 
-    // Confetti
     var duration = 2500;
     var end = Date.now() + duration;
     (function frame() {
@@ -119,28 +123,25 @@ function mostrarMensagem() {
         if (Date.now() < end) requestAnimationFrame(frame);
     })();
 
-    // Frase animada junto com a foto
     let frase = "Rayssa, que o seu novo ciclo venha trazendo aquilo que você merece: amor, tranquilidade e tudo que faz teu coração sorrir. Chegar aos 30 não é o fim do mundo, é só o começo de coisas ainda melhores! Você apenas ficou mais madura e continua linda!";
     let i = 0;
     let elemento = document.getElementById("mensagemTexto");
     elemento.innerHTML = "";
 
-    // Dispara a animação da frase junto com a foto
     function digitar() {
         if (i < frase.length) {
             elemento.innerHTML += frase.charAt(i);
             i++;
-            setTimeout(digitar, 30); // mais rápido e suave
+            setTimeout(digitar, 30);
         }
     }
-    digitar(); // inicia imediatamente com a foto
+    digitar();
 }
 
 function abrirForm() {
     window.open("https://forms.gle/ve9F82i7nJDH7da88", "_blank");
 }
 
-// Título digitando
 let titulo = "Feliz aniversário, Rayssa! 🎉";
 let index = 0;
 function digitarTitulo() {
@@ -152,7 +153,6 @@ function digitarTitulo() {
 }
 digitarTitulo();
 
-// Corações e balões
 function criarElementoFlutuante(tipo, simbolo) {
     var el = document.createElement('div');
     el.className = tipo;
@@ -165,7 +165,6 @@ function criarElementoFlutuante(tipo, simbolo) {
 setInterval(() => criarElementoFlutuante('coracao', '💖'), 1200);
 setInterval(() => criarElementoFlutuante('balao', '🎈'), 1700);
 
-// Estrelas
 function createStar(){
     const s=document.createElement('div');
     s.innerHTML='⭐';
@@ -180,6 +179,7 @@ function createStar(){
 }
 setInterval(createStar,400);
 </script>
-
 </body>
 </html>
+
+
